@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+  db:
+    container_name: db_desafio_pg
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: desafio
+      POSTGRES_USER: desafio
+      POSTGRES_DB: desafio
+
+  adminer:
+    container_name: admin_db
+    image: adminer
+    restart: always
+    ports:
+      - 8090:8080
