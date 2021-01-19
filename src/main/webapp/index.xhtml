@@ -16,7 +16,6 @@
     <title>Desafio ESIG Software</title>
 
     <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/cover/"/>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
@@ -27,35 +26,101 @@
 
 </h:head>
 
-<h:body>
+<h:body class="text-center">
 
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
         <header class="masthead mb-auto">
             <div class="inner">
-                <h3 class="masthead-brand">ESIG Software</h3>
+                <h3 class="masthead-brand">Desafio</h3>
                 <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="#">Desafio</a>
+                    <a class="nav-link active" href="#">Home</a>
                     <a class="nav-link" href="#">Github</a>
                 </nav>
             </div>
         </header>
 
-        <main role="main" class="inner cover">
-            <h1 class="cover-heading">Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-            <p class="lead">
-                <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-            </p>
+
+        <main class="main">
+            <h:form id="todoForm" class="input-group" autocomplete="off">
+                <div class="ui-g-12 ui-md-12">
+                    <div class="ui-inputgroup">
+                        <p:remoteCommand name="cancelEdit" process="@this" update="@form :todoList"
+                                         action="#{viewTodo.cancelEdit}" />
+                        <p:defaultCommand target="save"/>
+
+                        <div class="input-group-prepend" >
+                            <p:commandButton styleClass="btn edit-cancel" update="@form :todoList" process="@this"
+                                             icon="pi pi-times" rendered="#{viewTodo.edit}"
+                                             action="#{viewTodo.cancelEdit}"/>
+                        </div>
+
+                        <p:inputText id="nameTodo" placeholder="Digite sua tarefa." required="true"
+                                     value="#{viewTodo.todoDTO.descricao}" autocomplete="off" styleClass="todo-edit" />
+
+                        <div class="input-group-append">
+                            <p:commandButton id="save" styleClass="btn todo-save" update="@form :todoList"
+                                             icon="pi pi-save" action="#{viewTodo.addTodo}"/>
+                        </div>
+                    </div>
+                </div>
+
+            </h:form>
+
+            <p:dataList id="todoList" type="unordered" itemType="none" emptyMessage="" var="todo"
+                        value="#{viewTodo.todos}">
+
+                <h:panelGroup layout="block" id="todoItem" class="todo-item">
+                    <h:form layout="block" class="input-group" >
+
+                        <div>
+                            <h:selectBooleanCheckbox styleClass="todo-status" value="#{todo.status}" id="complete" >
+                                <p:ajax event="change" listener="#{viewTodo.changeStatus(todo.id, todo.status)}"
+                                        update="@form :todoList" />
+
+                            </h:selectBooleanCheckbox>
+                            <h:outputLabel class="checkbox" for="complete">
+                                <h:outputText styleClass="box"/>
+                                <h:outputText styleClass="check"/>
+                            </h:outputLabel>
+                        </div>
+
+                        <h:outputLabel class="todo-content" id="todo">
+                            <h:outputText value="#{todo.descricao}"/>
+                            <p:ajax event="click" update=":todoForm:nameTodo :todoForm" oncomplete="focusFix(jQuery('.todo-edit'))"
+                                    listener="#{viewTodo.updateTodo(todo)}" />
+                        </h:outputLabel>
+
+
+                        <div class="input-group-append">
+                            <p:commandButton icon="pi pi-times" styleClass="btn remove" update=":todoList"
+                                             action="#{viewTodo.deleteTodo(todo.id)}"/>
+                        </div>
+
+                    </h:form>
+                </h:panelGroup>
+
+                <f:facet name="footer">
+                    <h:panelGroup styleClass="toolbar" layout="block" rendered="#{viewTodo.todos.size() > 0}">
+                        <div class="todo-count">
+                            <h:outputText value="#{viewTodo.todos.size()} Tarefa(s)" />
+                        </div>
+                        <div class="clearfix"></div>
+                    </h:panelGroup>
+                </f:facet>
+
+            </p:dataList>
+
         </main>
 
         <footer class="mastfoot mt-auto">
             <div class="inner">
-                <p>Todos os Direitos Reservado ©</p>
+                <p>copyright © Todos os direitos reservados</p>
             </div>
         </footer>
     </div>
 
-
 </h:body>
 
+<script src="assets/js/scripts.js" ></script>
+<h:outputScript library="primefaces" name="jquery/jquery.js"/>
 </html>
