@@ -15,8 +15,11 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>desafio</name>
     <description>Desafio ESIG Software</description>
+    <packaging>jar</packaging>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>

@@ -4,13 +4,4 @@ function focusFix(input) {
     input.val('');
     input.val(tmpStr);
 
-    function cancelEditListener() {
-
-        cancelEdit();
-
-        $(this).unbind('keydown', cancelEditListener)
-        return false;
-    }
-
-    input.bind('keydown', 'esc', cancelEditListener);
 }

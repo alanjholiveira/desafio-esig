@@ -44,8 +44,6 @@
             <h:form id="todoForm" class="input-group" autocomplete="off">
                 <div class="ui-g-12 ui-md-12">
                     <div class="ui-inputgroup">
-                        <p:remoteCommand name="cancelEdit" process="@this" update="@form :todoList"
-                                         action="#{viewTodo.cancelEdit}" />
                         <p:defaultCommand target="save"/>
 
                         <div class="input-group-prepend" >
